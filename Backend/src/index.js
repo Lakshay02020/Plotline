@@ -1,9 +1,12 @@
 const express = require('express');
 const app = express();
+const path = require("path");
 const cookieParser = require('cookie-parser');
+
 const productRoutes = require('./Routes/productRoutes');
 const Product = require('./Models/productModel');
 const userRoutes = require('./Routes/user');
+const staticRoute = require("./Routes/staticRouter");
 
 const User = require('./Models/userModel');
 const DataBase = require('./database');
@@ -15,13 +18,20 @@ DataBase("mongodb://127.0.0.1:27017/Plotline").then(() => {
   console.log("Database connected");
 });
 
+// View Engine
+app.set("view engine", "ejs");
+app.set("views", path.resolve("./src/views"));
+
 // Middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //Routes
+app.use("/", staticRoute);
 app.use('/user', userRoutes);
-app.use('/productRoutes', restrictToLoggedinUserOnly, productRoutes);
+app.use('/productRoutes',  productRoutes);
+// app.use('/productRoutes', restrictToLoggedinUserOnly, productRoutes);
 
 // Server
 const port = process.env.PORT || 5000;

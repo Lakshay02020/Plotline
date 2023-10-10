@@ -3,9 +3,14 @@ const router = express.Router()
 const Product = require('../Models/productModel')
  
 //User
-router.get('/', async(req, res) => {
-    const products = await Product.find()
-    res.json(products)
+router.get('/', async (req, res) => {
+    // res.render()
+    try {
+        const products = await Product.find();
+        res.render('home.ejs', { products }); // Render the EJS file with products data
+    } catch (error) {
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
 });
 
 //Admin

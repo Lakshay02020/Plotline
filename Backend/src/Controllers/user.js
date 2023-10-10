@@ -3,6 +3,7 @@ const User = require("../Models/userModel");
 const { setUser } = require("../Services/auth");
 
 async function handleUserSignup(req, res) {
+    console.log(req.body)
     const { username, email, password } = req.body;
     try {
       const user = new User({ username, email, password });
@@ -14,16 +15,18 @@ async function handleUserSignup(req, res) {
 }
 
 async function handleUserLogin(req, res) {
+  console.log(req.body)
   const { email, password } = req.body;
   const user = await User.findOne({ email, password });
 
   if (!user)
     res.status(400).json({ success: false, message: "user not found" });
-
+  else{ 
   const sessionId = uuidv4();
   setUser(sessionId, user);
   res.cookie("uid", sessionId);
   res.status(201).json({ success: true, data: user, message: sessionId});
+}
 }
 
 module.exports = {
