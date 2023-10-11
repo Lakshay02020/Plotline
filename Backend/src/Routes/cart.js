@@ -59,4 +59,7 @@ router.post("/clear", async (req, res) => {
   }
 });
 
+router.post("/checkout", async (req, res) => {
+    res.render("checkout")
+});
 module.exports = router;
