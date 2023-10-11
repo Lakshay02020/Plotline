@@ -2,16 +2,26 @@ const express = require("express");
 const router = express.Router();
 const { getUser } = require("../Services/auth");
 const User = require("../Models/userModel");
+const Product = require("../Models/productModel");
 
 router.get("/", async (req, res) => {
     const userUid = req.cookies?.uid;
     const user = getUser(userUid);
     if(!user){
         res.status(404).json({ message: "User not authenticated"});
-    }
-    req.user = user;
-    console.log("Routing to cart")
-    res.render("cart",{cartItems:user.cart});
+        try {
+            const cartItems = await Promise.all(user.cart.map(async productId => {
+                const cartItem = await Product.findById(productId);  // Assuming your Cart model has findById method
+                return cartItem;
+            }));
+            
+            console.log(cartItems)
+            // Render the cart page with the cart items
+            res.render("cart", { cartItems: cartItems });
+        } catch (error) {
+            console.error("Error fetching cart items:", error);
+            res.status(500).json({ message: "Internal Server Error" });
+        }}
 });
 
 router.post("/addCartItems", async (req, res) => {
@@ -60,6 +70,26 @@ router.post("/clear", async (req, res) => {
 });
 
 router.post("/checkout", async (req, res) => {
-    res.render("checkout")
+    const userUid = req.cookies?.uid;
+    const user = getUser(userUid);
+    if (!user) {
+      res.status(404).json({ message: "User not authenticated" });
+    }
+    else{
+    try {
+      const cartItems = await Promise.all(
+        user.cart.map(async (productId) => {
+          const cartItem = await Product.findById(productId); // Assuming your Cart model has findById method
+          return cartItem;
+        })
+      );
+  
+      console.log(cartItems);
+      res.render("checkout", { cartItems: cartItems });
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+      res.status(500).json({ message: "Internal Server Error" });
+    }}
+    // res.render("checkout")
 });
 module.exports = router;

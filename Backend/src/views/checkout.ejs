@@ -31,27 +31,42 @@
 </head>
 
 <body>
+    <% function calculateTax(type, price) { %>
+        <% let taxAmount = 0; %>
+        <% if (type === 'product') { %>
+          <% if (price > 10 && price <= 5000) { %>
+            <% taxAmount = price * 0.12; %>
+          <% } else if (price > 5000) { %>
+            <% taxAmount = price * 0.18; %>
+          <% } else { %>
+            <% taxAmount = 0; %>
+          <% } %>
+        <% } else if (type === 'service') { %>
+          <% if (price > 1000 && price <= 8000) { %>
+            <% taxAmount = price * 0.10; %>
+          <% } else if (price > 8000) { %>
+            <% taxAmount = price * 0.15; %>
+          <% } else { %>
+            <% taxAmount = 0; %>
+          <% } %>
+        <% } %>
+        <% return parseFloat(taxAmount).toFixed(2); %>
+      <% } %>
 
+      <% let totalPrice = 0; %>
     <div class="col-md-12">
         <h1 class="text-primary">Checkout</h1>
-    
-        <div class="checkout-item shadow bg-white p-3">
-            <h5 class="text-primary">Product 1</h5>
-            <p><span class="fw-bold">Price:</span> $1000</p>
-            <p><span class="fw-bold">P Tax:</span> <span id="productTax1"></span></p>
-            <p><span class="fw-bold">S Tax:</span> <span id="serviceTax1"></span></p>
-        </div>
-    
-        <div class="checkout-item shadow bg-white p-3">
-            <h5 class="text-primary"> Product 2</h5>
-            <p><span class="fw-bold">Price:</span> $5500</p>
-            <p><span class="fw-bold">P Tax:</span> <span id="productTax2"></span></p>
-            <p><span class="fw-bold">S Tax:</span> <span id="serviceTax2"></span></p>
-        </div>
-
+        <% cartItems.forEach((item)=> { %>
+            <div class="checkout-item shadow bg-white p-3">
+                <h5 class="text-primary"><%= item.name%></h5>
+                <p><span class="fw-bold">Price:</span>$<%= item.price%></p>
+                <p><span class="fw-bold">Product Tax:</span> $<%= calculateTax('product', item.price) %></p>
+                <p><span class="fw-bold">Service Tax:</span> $<%= calculateTax('service', item.price) %></p>
+                <% totalPrice += parseFloat(item.price) + parseFloat(calculateTax('product', item.price)) + parseFloat(calculateTax('service', item.price)); %>
+            </div>
+        <% }) %>
         <div class="total-info shadow bg-white p-3">
-            <h5>Total Price (Product + Tax): $<span id="totalPrice"></span></h5>
-            <h5>Total Amount (Product + Tax + Service Tax): $<span id="totalAmount"></span></h5>
+            <h5>Total Price $<%= totalPrice.toFixed(2) %></h5>
         </div>
     </div>
 
