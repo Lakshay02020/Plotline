@@ -39,7 +39,6 @@ router.post("/addCartItems", async (req, res) => {
     catch(err){
         console.log(err);
     }
-
     res.redirect("/productRoutes")
 });
 
