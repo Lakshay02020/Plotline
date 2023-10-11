@@ -8,12 +8,12 @@ async function handleUserSignup(req, res) {
     try {
       const user = new User({ username, email, password });
       await user.save();
-      res.status(201).json({ success: true, data: user });
+      // res.status(201).json({ success: true, data: user });
+      res.redirect("/productRoutes");
     } catch (error) {
       res.status(400).json({ success: false, error: error.message });
     }
 
-    // return res.redirect("/productRoutes");
 }
 
 async function handleUserLogin(req, res) {
@@ -27,8 +27,8 @@ async function handleUserLogin(req, res) {
   const sessionId = uuidv4();
   setUser(sessionId, user);
   res.cookie("uid", sessionId);
-  res.status(200).json({ success: true, data: user });
-  // res.redirect("/productRoutes");
+  // res.status(200).json({ success: true, data: user });
+  res.redirect("/productRoutes");
 }
 
 

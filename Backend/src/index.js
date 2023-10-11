@@ -15,7 +15,7 @@ const DataBase = require('./database');
 const { restrictToLoggedinUserOnly } = require('./Middlewares/auth');
 
 // DataBase
-DataBase("mongodb://127.0.0.1:27017/Plotline").then(() => {
+DataBase("mongodb+srv://lakshay02singla:vyAhmuQ9PmWaKMTQ5@cluster0.0cuekve.mongodb.net/Plotline").then(() => {
   console.log("Database connected");
 });
 

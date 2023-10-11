@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { getUser } = require("../Services/auth");
 const Product = require("../Models/productModel");
-router.get("/signup", (req, res) => {
+router.get("/", (req, res) => {
   return res.render("signup");
 });
 
