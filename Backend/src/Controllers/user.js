@@ -8,8 +8,7 @@ async function handleUserSignup(req, res) {
     try {
       const user = new User({ username, email, password });
       await user.save();
-      // res.status(201).json({ success: true, data: user });
-      res.redirect("/productRoutes");
+      res.redirect("/login");
     } catch (error) {
       res.status(400).json({ success: false, error: error.message });
     }
@@ -24,14 +23,11 @@ async function handleUserLogin(req, res) {
   if (!user)
     res.status(400).json({ success: false, message: "user not found" });
   else{ 
-  const sessionId = uuidv4();
-  setUser(sessionId, user);
-  res.cookie("uid", sessionId);
-  // res.status(200).json({ success: true, data: user });
-  res.redirect("/productRoutes");
-}
-
-
+        const sessionId = uuidv4();
+        setUser(sessionId, user);
+        res.cookie("uid", sessionId);
+        res.redirect("/productRoutes");
+  }
 }
 
 module.exports = {
