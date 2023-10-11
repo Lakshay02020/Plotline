@@ -34,20 +34,18 @@
     <% function calculateTax(type, price) { %>
         <% let taxAmount = 0; %>
         <% if (type === 'product') { %>
-          <% if (price > 10 && price <= 5000) { %>
-            <% taxAmount = price * 0.12; %>
+            <% taxAmount = 200; %>
+          <% if (price > 1000 && price <= 5000) { %>
+            <% taxAmount = taxAmount + price * 0.12; %>
           <% } else if (price > 5000) { %>
-            <% taxAmount = price * 0.18; %>
-          <% } else { %>
-            <% taxAmount = 0; %>
+            <% taxAmount = taxAmount + price * 0.18; %>
           <% } %>
         <% } else if (type === 'service') { %>
+            <% taxAmount = 100; %>
           <% if (price > 1000 && price <= 8000) { %>
-            <% taxAmount = price * 0.10; %>
+            <% taxAmount = taxAmount + price * 0.10; %>
           <% } else if (price > 8000) { %>
-            <% taxAmount = price * 0.15; %>
-          <% } else { %>
-            <% taxAmount = 0; %>
+            <% taxAmount = taxAmount + price * 0.15; %>
           <% } %>
         <% } %>
         <% return parseFloat(taxAmount).toFixed(2); %>
@@ -126,49 +124,8 @@
         </div>
     </div>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        // Function to calculate tax based on the specified rules
-        function calculateTax(type, price) {
-            let taxAmount = 0;
-
-            if (type === 'product') {
-                if (price > 1000 && price <= 5000) {
-                    taxAmount = price * 0.12;
-                } else if (price > 5000) {
-                    taxAmount = price * 0.18;
-                } else {
-                    taxAmount = 0;
-                }
-            } else if (type === 'service') {
-                if (price > 1000 && price <= 8000) {
-                    taxAmount = price * 0.10;
-                } else if (price > 8000) {
-                    taxAmount = price * 0.15;
-                } else {
-                    taxAmount = 0;
-                }
-            }
-
-            return parseFloat(taxAmount).toFixed(2);
-        }
-
-        // Update tax for each product and service
-        document.getElementById('productTax1').innerText = '$' + calculateTax('product', 1000);
-        document.getElementById('productTax2').innerText = '$' + calculateTax('product', 5500);
-        document.getElementById('serviceTax1').innerText = '$' + calculateTax('service', 3000);
-        document.getElementById('serviceTax2').innerText = '$' + calculateTax('service', 9000);
-
-        // Calculate and display combined tax
-        const productTaxTotal = parseFloat(calculateTax('product', 1000)) + parseFloat(calculateTax('product', 5500));
-        const serviceTaxTotal = parseFloat(calculateTax('service', 3000)) + parseFloat(calculateTax('service', 9000));
-        const combinedTax = productTaxTotal + serviceTaxTotal;
-
-        document.getElementById('combinedTax').innerText = '$' + combinedTax.toFixed(2);
-    </script>
-
-</body>
+  </body>
 
 </html>
