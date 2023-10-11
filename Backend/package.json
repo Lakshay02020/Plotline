@@ -9,12 +9,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.18.2",
     "mongoose": "^7.5.4",
     "moongoose": "^0.0.5",
     "nodemon": "^3.0.1"
   },
-  "bin" : {
-    "execute" : "src/index.js"
-} 
+  "bin": {
+    "execute": "src/index.js"
+  }
 }
