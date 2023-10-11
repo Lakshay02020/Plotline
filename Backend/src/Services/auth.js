@@ -1,6 +1,8 @@
 const sessionIdToUserMap = new Map();
 
 function setUser(id, user) {
+  console.log("setUser");
+  console.log(id, user);
   sessionIdToUserMap.set(id, user);
 }
 
