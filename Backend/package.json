@@ -13,5 +13,8 @@
     "mongoose": "^7.5.4",
     "moongoose": "^0.0.5",
     "nodemon": "^3.0.1"
-  }
+  },
+  "bin" : {
+    "execute" : "src/index.js"
+} 
 }
