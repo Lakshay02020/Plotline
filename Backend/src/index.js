@@ -28,6 +28,8 @@ app.set("views", path.resolve("./src/views"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'Static')))
+// app.use('/static', express.static(path.join(__dirname, 'Static')))
 
 //Routes
 app.use('/order', orderRoutes)
@@ -43,3 +45,4 @@ const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server Running at ${port}`)
 });
+ 
