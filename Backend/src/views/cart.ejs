@@ -121,11 +121,12 @@
                                     <label class="price">$<%= item.price%> </label>
                                 </div>
                                 <div class="col-md-2 col-5 my-auto">
-                                    <div class="remove">
-                                        <a href="" class="btn btn-danger btn-sm">
-                                            <i class="fa fa-trash"></i> Remove
-                                        </a>
-                                    </div>
+                                    <div class="mt-2">
+                                        <form method="post" action="/cart/deleteCartItem">
+                                           <input type="hidden" name="itemId" value="<%= item._id %>">
+                                           <button class="btn btn-danger tn1" id="alert1">Remove</button>
+                                         </form>
+                                       </div>
                                 </div>
                             </div>
                         </div>

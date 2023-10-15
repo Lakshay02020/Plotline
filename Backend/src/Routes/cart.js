@@ -46,14 +46,16 @@ router.post("/deleteCartItem", async (req, res) => {
     const userUid = req.cookies?.uid;
     console.log(req.body);
     const user = getUser(userUid);
-    console.log(user);
+    const itemId = req.body.itemId;
+    const item = await Product.findById(itemId);
     if(!user){
         res.status(404).json({ message: "User not authenticated"});
     }
-    console.log(user.cart);
-    await User.findOneAndUpdate({ username: user.username }, { cart: [] });
-    console.log(user.cart);
-});
+    const itemIndex = user.cart.findIndex(item => item.id === itemId);
+    user.cart.splice(itemIndex, 1);
+    await user.save();
+    res.redirect("/cart"); 
+}); 
 
 router.post("/clear", async (req, res) => {
   const info = await User.updateOne(
