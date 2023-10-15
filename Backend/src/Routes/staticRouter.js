@@ -17,23 +17,27 @@ router.get("/product", (req, res) => {
 router.get("/cart", async (req, res) => {
   const userUid = req.cookies?.uid;
   const user = getUser(userUid);
-  if (!user) {
+  if (!user) { 
     res.status(404).json({ message: "User not authenticated" });
   }
-  try {
-    const cartItems = await Promise.all(
-      user.cart.map(async (productId) => {
-        const cartItem = await Product.findById(productId); // Assuming your Cart model has findById method
-        return cartItem;
-      })
-    );
 
-    console.log(cartItems);
-    res.render("cart", { cartItems: cartItems });
-  } catch (error) {
-    console.error("Error fetching cart items:", error);
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
+    const cartItems = await Promise.all(
+      user.cart.map(async ({ itemId, quantity }) => {
+        try {
+          const product = await Product.findById(itemId);
+          return { product, quantity };
+        } catch (error) {
+          console.error("Error fetching product:", error);
+          return null;
+        }
+      }) 
+    );
+ 
+    const validCartItems = cartItems.filter(item => item !== null);
+
+    console.log("Cart items:", validCartItems); 
+    return res.render("cart", { cartItems: validCartItems });
+}); 
 
 module.exports = router;
+ 

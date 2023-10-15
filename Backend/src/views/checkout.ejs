@@ -56,11 +56,14 @@
         <h1 class="text-primary">Checkout</h1>
         <% cartItems.forEach((item)=> { %>
             <div class="checkout-item shadow bg-white p-3">
-                <h5 class="text-primary"><%= item.name%></h5>
-                <p><span class="fw-bold">Price:</span>$<%= item.price%></p>
-                <p><span class="fw-bold">Product Tax:</span> $<%= calculateTax('product', item.price) %></p>
-                <p><span class="fw-bold">Service Tax:</span> $<%= calculateTax('service', item.price) %></p>
-                <% totalPrice += parseFloat(item.price) + parseFloat(calculateTax('product', item.price)) + parseFloat(calculateTax('service', item.price)); %>
+                <h5 class="text-primary"><%= item.product.name%></h5>
+                <p><span class="fw-bold">Price:</span>$<%= item.product.price%></p>
+                <p><span class="fw-bold">Quantity:</span> <%= item.quantity%></p>
+                <p><span class="fw-bold">Product Tax:</span> $<%= calculateTax('product', item.product.price) %></p>
+                <p><span class="fw-bold">Service Tax:</span> $<%= calculateTax('service', item.product.price) %></p>
+                <p><span class="fw-bold">Total Price:</span> $<%= (parseFloat(item.product.price) + parseFloat(calculateTax('product', item.product.price)) + parseFloat(calculateTax('service', item.product.price))) * item.quantity %></p>
+
+                <% totalPrice += (parseFloat(item.product.price) + parseFloat(calculateTax('product', item.product.price)) + parseFloat(calculateTax('service', item.product.price))) * item.quantity; %>
             </div>
         <% }) %>
         <div class="total-info shadow bg-white p-3">

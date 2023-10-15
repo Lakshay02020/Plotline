@@ -21,7 +21,7 @@ router.get("/", async (req, res) => {
         } catch (error) {
             console.error("Error fetching cart items:", error);
             res.status(500).json({ message: "Internal Server Error" });
-        }}
+        }} 
 });
 
 router.post("/addCartItems", async (req, res) => {
@@ -31,15 +31,26 @@ router.post("/addCartItems", async (req, res) => {
     if(!user){
         res.status(404).json({ message: "User not authenticated"});
     }
-    try{
-        user.cart.push(itemId);
-        console.log("Cart Items: " + user.cart);
-        await User.findOneAndUpdate({ username: user.username }, { cart: user.cart });
-    }
-    catch(err){
-        console.log(err);
-    }
-    res.redirect("/productRoutes")
+    try {
+      // Check if the item is already in the cart
+      const existingItem = user.cart.find(item => item.itemId === itemId);
+
+      if (existingItem) {
+          existingItem.quantity++;
+      } else {
+          user.cart.push({ itemId, quantity: 1 });
+      }
+
+      console.log("Cart Items: ", user.cart);
+
+      // Update the user's cart in the database
+      await User.findOneAndUpdate({ username: user.username }, { cart: user.cart });
+
+      res.redirect("/productRoutes");
+  } catch (err) {
+      console.error("Error adding item to cart:", err);
+      res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 router.post("/deleteCartItem", async (req, res) => {
@@ -77,20 +88,21 @@ router.post("/checkout", async (req, res) => {
       res.status(404).json({ message: "User not authenticated" });
     }
     else{
-    try {
       const cartItems = await Promise.all(
-        user.cart.map(async (productId) => {
-          const cartItem = await Product.findById(productId); // Assuming your Cart model has findById method
-          return cartItem;
-        })
+        user.cart.map(async ({ itemId, quantity }) => {
+          try {
+            const product = await Product.findById(itemId);
+            return { product, quantity };
+          } catch (error) {
+            console.error("Error fetching product:", error);
+            return null;
+          }
+        }) 
       );
-  
-      console.log(cartItems);
+   
+      const validCartItems = cartItems.filter(item => item !== null);
       res.render("checkout", { cartItems: cartItems });
-    } catch (error) {
-      console.error("Error fetching cart items:", error);
-      res.status(500).json({ message: "Internal Server Error" });
-    }}
+    }
     // res.render("checkout")
 });
 module.exports = router;

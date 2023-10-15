@@ -24,6 +24,8 @@ router.post("/createOrder", async(req,res) =>{
         )
         const saved_order = await order.save();
         console.log(saved_order);
+        user.cart = [];
+        await user.save(); 
         res.render("order")
 })
 module.exports = router;

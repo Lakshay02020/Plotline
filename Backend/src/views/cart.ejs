@@ -97,8 +97,11 @@
                                 <div class="col-md-6">
                                     <h4>Products</h4>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <h4>Price</h4>
+                                </div>
+                                <div class="col-md-2">
+                                    <h4>Quantity</h4>
                                 </div>
                                 <div class="col-md-2">
                                     <h4>Remove</h4>
@@ -113,17 +116,20 @@
                                     <a href="">
                                         <label class="product-name">
                                             <img src="hp-laptop.jpg" style="width: 50px; height: 50px" alt="">
-                                            <%= item.name%>
+                                            <%= item.product.name %>
                                         </label>
                                     </a>
                                 </div>
-                                <div class="col-md-4 my-auto">
-                                    <label class="price">$<%= item.price%> </label>
+                                <div class="col-md-2 my-auto">
+                                    <label class="price">$<%= item.product.price%> </label>
                                 </div>
+                                <div class="col-md-2 my-auto">
+                                    <label class="price"><%= item.quantity%> </label>
+                                </div> 
                                 <div class="col-md-2 col-5 my-auto">
                                     <div class="mt-2">
                                         <form method="post" action="/cart/deleteCartItem">
-                                           <input type="hidden" name="itemId" value="<%= item._id %>">
+                                           <input type="hidden" name="itemId" value="<%= item.product._id %>">
                                            <button class="btn btn-danger tn1" id="alert1">Remove</button>
                                          </form>
                                        </div>
