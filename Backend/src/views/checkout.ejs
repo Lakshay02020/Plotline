@@ -75,7 +75,7 @@
             </h4>
             <hr>
 
-            <form action="" method="POST">
+            <form action="/order/createOrder" method="post">
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label>Full Name</label>
@@ -99,25 +99,13 @@
                     </div>
                     <div class="col-md-12 mb-3">
                         <label>Select Payment Mode: </label>
-                        <div class="d-flex justify-content-start">
-                            <button class="btn btn-link fw-bold" id="cashOnDeliveryTab-tab" data-bs-toggle="pill" data-bs-target="#cashOnDeliveryTab" type="button" role="tab" aria-controls="cashOnDeliveryTab" aria-selected="true">Cash on Delivery</button>
-                            <button class="btn btn-link fw-bold" id="onlinePayment-tab" data-bs-toggle="pill" data-bs-target="#onlinePayment" type="button" role="tab" aria-controls="onlinePayment" aria-selected="false">Online Payment</button>
-                        </div>
-                    
-                        <div class="tab-content" id="v-pills-tabContent">
-                            <div class="tab-pane fade" id="cashOnDeliveryTab" role="tabpanel" aria-labelledby="cashOnDeliveryTab-tab">
-                                <h6>Cash on Delivery Mode</h6>
-                                <hr/>
-                                <button type="button" class="btn btn-primary">Place Order (Cash on Delivery)</button>
-                            </div>
-                            <div class="tab-pane fade" id="onlinePayment" role="tabpanel" aria-labelledby="onlinePayment-tab">
-                                <h6>Online Payment Mode</h6>
-                                <hr/>
-                                <button type="button" class="btn btn-warning">Pay Now (Online Payment)</button>
-                            </div>
-                        </div>
+                        <select class="form-select" id="paymentMethod" name="paymentMethod">
+                            <option value="cashOnDelivery">Cash on Delivery Mode</option>
+                            <option value="onlinePayment">Online Payment Mode</option>
+                        </select>
                     </div>
-                    
+                    <input type="hidden" id="totalPrice" name="totalPrice" value="<%= totalPrice.toFixed(2) %>">
+                    <button type="submit" class="btn btn-primary">Place Order</button>
                 </div>
             </form>
 
