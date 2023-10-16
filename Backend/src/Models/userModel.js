@@ -17,6 +17,9 @@ const userSchema = new mongoose.Schema({
   cart: {
     type: [{ itemId: String, quantity: Number }],
   },
+  orders:{
+    type: [String]
+  }
 });
 
 const User = mongoose.model("User", userSchema);
