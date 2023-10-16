@@ -60,26 +60,26 @@
         <div class="order-list">
             <div class="order-item">
               <div class="order-info">
-                <h3>Order ID: <%= order._id %></h3>
+                <h3>Order ID: <%= order.order._id %></h3>
                 <p>Date: June 12, 2023</p>
+                <p>Total: $<%= order.order.amount %></p>
               </div>
               <ul class="order-items">
                 <% order.items.forEach((item)=>{%>
                     <li>
                         <img src="<%= item.imageUrl %>" alt="<%= item.title %>" class="product-image">
                         <div class="product-details">
-                            <h4><%= item.name %></h4>
+                            <h4><%= item.product.name %></h4>
                             <p>Quantity: <%= item.quantity %></p>
-                            <p>Price: $<%= item.price %> each</p>
+                            <p>Price: $<%= item.product.price %> each</p>
                         </div>
                     </li>
                 <% }) %>
-                <!-- Add more <li> elements for each product in the order -->
               </ul>
             </div>
+
         </div>
         <% }) %>
-      <!-- Add more .order-item divs for each order -->
   </div>
 
   <!-- Bootstrap JS (optional, for Bootstrap features) -->

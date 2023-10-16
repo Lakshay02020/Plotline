@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Order = require('../Models/orderModel');
 const { getUser } = require("../Services/auth");
+const Product = require("../Models/productModel");
 
 router.post("/createOrder", async(req,res) =>{
     const userUid = req.cookies?.uid;
@@ -40,14 +41,21 @@ router.get("/myOrders", async (req, res) => {
     }
 
     const order_ids = user.orders;
-    const orders = await Promise.all(order_ids.map(async(orderId) =>{
-            const order = await Order.findById(orderId);
-            return order;
+    const orders = await Promise.all(order_ids.map(async (orderId) => {
+        const order = await Order.findById(orderId);
+        const items = await Promise.all(order.items.map(async (item) => {
+            const product = await Product.findById(item.itemId);
+            return {product, quantity: item.quantity};
         }));
+        return { order, items };
+    }));
+
     console.log(orders);
-    
-    res.render("myOrders", {orders: orders});
+
+    res.render("myOrders", { orders: orders });
 });
+
+
 
 
 // router.get("/getOrders", async(req,res) =>{
