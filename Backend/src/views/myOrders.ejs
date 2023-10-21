@@ -5,52 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Orders</title>
-  <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <!-- Custom CSS -->
-  <link rel="stylesheet" href="styles.css">
-  <style>
-    body {
-  font-family: Arial, sans-serif;
-}
-
-.container {
-  margin-top: 50px;
-}
-
-.order-list {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.order-item {
-  margin-bottom: 20px;
-}
-
-.order-info {
-  margin-bottom: 10px;
-}
-
-.order-items li {
-  display: flex;
-  margin-bottom: 10px;
-  padding: 10px;
-  background-color: #f9f9f9;
-  border-radius: 5px;
-}
-
-.product-image {
-  width: 100px;
-  margin-right: 20px;
-}
-
-.product-details {
-  flex: 1;
-}
-
-  </style>
+  <link rel="stylesheet" href="/myOrder.css">
 </head>
 
 <body>
@@ -61,8 +17,11 @@
             <div class="order-item">
               <div class="order-info">
                 <h3>Order ID: <%= order.order._id %></h3>
-                <p>Date: June 12, 2023</p>
+                <p>Date: June 12, 2023</p>   
+                <p>Address : <%= order.order.address%></p>
                 <p>Total: $<%= order.order.amount %></p>
+
+                <p>Status :<strong> <%= order.order.status%></strong></p>
               </div>
               <ul class="order-items">
                 <% order.items.forEach((item)=>{%>

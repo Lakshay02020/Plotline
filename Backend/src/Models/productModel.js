@@ -20,6 +20,11 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
+    path: {
+        type: String,
+        required: [true, 'Please enter product location'],
+    },
+
     createdAt: {
         type: Date,
         default: Date.now

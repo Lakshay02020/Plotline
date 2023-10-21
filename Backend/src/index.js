@@ -9,7 +9,7 @@ const userRoutes = require('./Routes/user');
 const staticRoute = require("./Routes/staticRouter");
 const cartRoutes = require('./Routes/cart');
 const orderRoutes = require('./Routes/orderRoutes');
-
+const adminRoutes = require('./Routes/adminRoutes');
 const User = require('./Models/userModel');
 const DataBase = require('./database');
 
@@ -29,9 +29,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'Static')))
+app.use('/uploads', express.static('uploads'));
 // app.use('/static', express.static(path.join(__dirname, 'Static')))
 
 //Routes
+app.use('/admin', adminRoutes);
+//
 app.use('/order', orderRoutes)
 app.use("/", staticRoute);
 app.use('/user', userRoutes);

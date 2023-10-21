@@ -1,0 +1,39 @@
+body {
+font-family: Arial, sans-serif;
+}
+
+.container {
+margin-top: 50px;
+}
+
+.order-list {
+border: 1px solid #ccc;
+padding: 20px;
+border-radius: 10px;
+margin-bottom: 20px;
+}
+
+.order-item {
+margin-bottom: 20px;
+}
+
+.order-info {
+margin-bottom: 10px;
+}
+
+.order-items li {
+display: flex;
+margin-bottom: 10px;
+padding: 10px;
+background-color: #f9f9f9;
+border-radius: 5px;
+}
+
+.product-image {
+width: 100px;
+margin-right: 20px;
+}
+
+.product-details {
+flex: 1;
+}
